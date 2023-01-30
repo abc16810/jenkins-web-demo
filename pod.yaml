@@ -22,14 +22,14 @@ spec:
     - mountPath: "/.kube/config"
       name: "config"
       readOnly: true
-  # - name: "inbound-agent"
-  #   image: "jenkins/inbound-agent:jdk11"
-  #   imagePullPolicy: "IfNotPresent"
-  #   name: "jnlp"
-  #   resources:
-  #     requests:
-  #       cpu: "100m"
-  #       memory: "256Mi"
+  - name: "inbound-agent"
+    image: "jenkins/inbound-agent:jdk11"
+    imagePullPolicy: "IfNotPresent"
+    name: "jnlp"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
   hostAliases:
   - hostnames:
     - "myregistry.io"
