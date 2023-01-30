@@ -21,7 +21,7 @@ pipeline {
     stages {
         stage('Run nodejs') {
             steps {
-                sh 'node -version'
+                sh 'node --version'
                 sh 'npm --version'
                 sh 'yarn --version'
                 sh "echo Workspace dir is ${pwd()}"
