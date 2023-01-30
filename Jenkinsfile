@@ -29,10 +29,12 @@ pipeline {
     stages {
         stage('Run nodejs test') {
             steps {
-                sh 'node --version'
-                sh 'npm --version'
-                sh 'yarn --version'
-                sh "echo Workspace dir is ${pwd()}"
+                container('nodejs') { 
+                    sh 'node --version'
+                    sh 'npm --version'
+                    sh 'yarn --version'
+                    sh "echo Workspace dir is ${pwd()}"
+                }
             }
         }
         stage("Pulling Code"){
