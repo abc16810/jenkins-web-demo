@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: "nodejs"
+    image: "myregistry.io:8088/library/node:14.3.0-alpine"
+    imagePullPolicy: "IfNotPresent"
+    command:
+      - sleep
+    args:
+      - 99d
+  - name: kubectl
+    image: "myregistry.io:8088/library/kubectl:1.25"
+    imagePullPolicy: "IfNotPresent"
+    securityContext:
+      runAsUser: 0
+    command:
+      - sleep
+    args:
+      - 99d
+    volumeMounts:
+    - mountPath: "/.kube/config"
+      name: "config"
+      readOnly: true
+  # - name: "inbound-agent"
+  #   image: "jenkins/inbound-agent:jdk11"
+  #   imagePullPolicy: "IfNotPresent"
+  #   name: "jnlp"
+  #   resources:
+  #     requests:
+  #       cpu: "100m"
+  #       memory: "256Mi"
+  hostAliases:
+  - hostnames:
+    - "myregistry.io"
+    ip: "10.4.55.209"
+  nodeSelector:
+    kubernetes.io/hostname: "utility1"
+  tolerations:
+  - effect: "NoSchedule"
+    operator: "Exists"
+  volumes:
+  # - hostPath:
+  #     path: "/run/containerd/containerd.sock"
+  #   name: "containerd"
+  # - name: "ca"
+  #   secret:
+  #     optional: false
+  #     secretName: "docker-ca"
+  # - hostPath:
+  #     path: "/run/buildkit/buildkitd.sock"
+  #   name: "buildkitd"
+  - hostPath:
+      path: "/home/jenkins/config"
+    name: "config"
