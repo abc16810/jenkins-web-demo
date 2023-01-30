@@ -12,14 +12,14 @@ pipeline {
         }
     }
     environment { 
-            REPO_HTTP = 'http://10.4.56.155/ops/jenkins-nodejs-demo.git'
+            REPO_HTTP = 'http://10.4.56.155/lumanman/performance-task-assessment-web.git'
             GIT_AUTH_ID = 'ea2f709f-9cac-4978-aeb2-9fc37e8e9667'
             HARBOR_ADDRESS = 'myregistry.io:8088'
             HARBOR_AUTH = credentials('harborAuth')
             IMAGE_NAME = 'my-web'
     }
     parameters {
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'Name', type: 'PT_BRANCH'  //Name git 参数名称
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'Name', type: 'PT_BRANCH'， useRepository: "${REPO_HTTP}"  //Name git 参数名称
         choice(
         name: 'ACTION',  //ACTION 选择参数名称
         description: '执行动作: \nbuild: 只构建镜像，不发布\ndeploy: 构建镜像并发布更新到开发环境',
