@@ -19,6 +19,7 @@ pipeline {
             IMAGE_NAME = 'my-web'
     }
     parameters {
+        // https://plugins.jenkins.io/git-parameter  用useRepository指定SCM
         gitParameter branchFilter: 'origin.*/(.*)', defaultValue: 'master', name: 'Name', type: 'PT_BRANCH', useRepository: '.*web.git'
         choice(
         name: 'ACTION',  //ACTION 选择参数名称
@@ -30,9 +31,7 @@ pipeline {
         stage('Run nodejs test') {
             steps {
                 container('nodejs') { 
-                    sh 'node --version'
-                    sh 'npm --version'
-                    sh 'yarn --version'
+                    sh 'node --version && npm --version && yarn --version'
                     sh "echo Workspace dir is ${pwd()}"
                 }
             }
@@ -55,6 +54,25 @@ pipeline {
                      println "Current branch is ${params.Name}, Commit ID is ${COMMIT_ID}, Image TAG is ${TAG}"
                 }
         
+            }
+        }
+        stage('Building') {
+            when {
+                expression { params.ACTION ==~ /(build|deploy)/ }
+            }
+            steps {
+                container(name: 'nodejs') {
+                sh "java -version"
+                sh '''
+                cd project && pwd
+                npm config set registry https://registry.npm.taobao.org
+                npm config get registry
+                #export CI=false
+                yarn install --https-proxy=http://10.4.56.230:3128
+                yarn run build
+                ls -l
+                '''
+                }
             }
         }
 
