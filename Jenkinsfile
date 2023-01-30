@@ -19,7 +19,7 @@ pipeline {
             IMAGE_NAME = 'my-web'
     }
     parameters {
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'Name', type: 'PT_BRANCH'， useRepository: '.*performance-task-assessment-web.git'  //Name git 参数名称
+        gitParameter branchFilter: 'origin.*/(.*)', defaultValue: 'master', name: 'Name', type: 'PT_BRANCH', useRepository: '.*web.git'
         choice(
         name: 'ACTION',  //ACTION 选择参数名称
         description: '执行动作: \nbuild: 只构建镜像，不发布\ndeploy: 构建镜像并发布更新到开发环境',
