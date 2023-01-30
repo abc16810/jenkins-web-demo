@@ -5,7 +5,7 @@ pipeline {
         kubernetes {
         cloud 'kubernetes'
         slaveConnectTimeout 1200
-        defaultContainer 'nodejs'
+        //defaultContainer 'nodejs'
         //inheritFrom 'mypod' // 指定pod 模板, 如果不指定可以通过yamlfile指定文件
         workspaceVolume hostPathWorkspaceVolume(hostPath: "/home/jenkins/agent", readOnly: false)   //持久化本地目录
         yamlFile 'pod.yaml'
