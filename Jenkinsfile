@@ -62,7 +62,6 @@ pipeline {
             }
             steps {
                 container(name: 'nodejs') {
-                sh "java -version"
                 sh '''
                 cd project && pwd
                 npm config set registry https://registry.npm.taobao.org
