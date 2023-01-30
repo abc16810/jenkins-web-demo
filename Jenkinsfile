@@ -43,7 +43,9 @@ pipeline {
                 // pwd && id
                 // '''
                 //检出指定分支代码
-                git branch: "${params.Name}", credentialsId: "${GIT_AUTH_ID}", url: "${REPO_HTTP}"
+                dir('project'){
+                    git branch: "${params.Name}", credentialsId: "${GIT_AUTH_ID}", url: "${REPO_HTTP}"
+                }
                 script {
                     COMMIT_ID = sh(
                         returnStdout: true,
