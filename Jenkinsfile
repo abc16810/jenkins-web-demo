@@ -66,7 +66,7 @@ pipeline {
                 cd project && pwd
                 npm config set registry https://registry.npm.taobao.org
                 npm config get registry
-                #export CI=false
+                export CI=false
                 yarn install --https-proxy=http://10.4.56.230:3128
                 yarn run build
                 ls -l
