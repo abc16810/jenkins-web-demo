@@ -74,6 +74,25 @@ pipeline {
                 }
             }
         }
+        stage("Docker build for creating image"){
+            when {
+                expression { params.ACTION ==~ /(build|deploy)/ }
+            }
+            steps {
+                container('nerdctl') {   //指定容器
+                    sh '''
+                    set +x
+                    cd project && id && pwd
+                    update-ca-certificates
+                    nerdctl login -u ${HARBOR_AUTH_USR} -p ${HARBOR_AUTH_PSW}  ${HARBOR_ADDRESS}
+                    '''
+                    sh "nerdctl build  -t ${HARBOR_ADDRESS}/library/${IMAGE_NAME}:${TAG} ../"
+                    sh "nerdctl push ${HARBOR_ADDRESS}/library/${IMAGE_NAME}:${TAG}"
+                }
+            }
+        }
+
+
 
     }
 
