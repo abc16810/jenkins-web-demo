@@ -86,7 +86,7 @@ pipeline {
                     update-ca-certificates
                     nerdctl login -u ${HARBOR_AUTH_USR} -p ${HARBOR_AUTH_PSW}  ${HARBOR_ADDRESS}
                     '''
-                    sh "cd ../ && nerdctl build  -t ${HARBOR_ADDRESS}/library/${IMAGE_NAME}:${TAG} ."
+                    sh "cd ../ && ls -l && nerdctl build  -t ${HARBOR_ADDRESS}/library/${IMAGE_NAME}:${TAG} ."
                     sh "nerdctl push ${HARBOR_ADDRESS}/library/${IMAGE_NAME}:${TAG}"
                 }
             }
