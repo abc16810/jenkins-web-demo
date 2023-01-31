@@ -16,7 +16,7 @@ pipeline {
             GIT_AUTH_ID = 'ea2f709f-9cac-4978-aeb2-9fc37e8e9667'
             HARBOR_ADDRESS = 'myregistry.io:8088'
             HARBOR_AUTH = credentials('harborAuth')
-            IMAGE_NAME = 'my-web'
+            IMAGE_NAME = 'my-test-nginx'
     }
     parameters {
         // https://plugins.jenkins.io/git-parameter  用useRepository指定SCM
