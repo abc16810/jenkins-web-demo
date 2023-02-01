@@ -91,9 +91,21 @@ pipeline {
                 }
             }
         }
-
-
-
+        stage('Deploying to K8s') {
+            when {
+                expression { params.ACTION == 'deploy' }
+            }
+            steps {
+                container('kubectl') {
+                    sh "sed -i 's/<BUILD_TAGS>/${TAG}/' rc.yaml"   //更新镜像tag
+                    sh '''
+                    PATH=/opt/bitnami/kubectl/bin:$PATH   # assign path
+                    kubectl get pod
+                    kubectl apply -f rc.yaml
+                    '''
+                }
+            }
+        }
     }
 
 }

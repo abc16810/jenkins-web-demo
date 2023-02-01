@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-nginx-web
+spec:
+  replicas: 1
+  selector:
+    name: mynginx
+  template:
+    metadata:
+      labels:
+        name: mynginx
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: "utility1"
+      tolerations:
+      - effect: "NoSchedule"
+        operator: "Exists"
+      containers:
+        - name: nginx
+          image: myregistry.io:8088/library/my-test-nginx:<BUILD_TAGS>
+          imagePullPolicy: "IfNotPresent"
+          ports:
+           - containerPort: 80
